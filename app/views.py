@@ -12,7 +12,7 @@ def sendMail(request):
         
         # Assuming you're using a file input field in your form with name 'attechfile'
         attached_file = request.FILES.get('attechfile')
-        
+                
         if attached_file:
             msg = EmailMessage(subject, message, from_email, recipient_list)
             msg.attach(attached_file.name, attached_file.read(), attached_file.content_type)
