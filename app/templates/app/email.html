@@ -12,11 +12,15 @@
     <title>Email Sent</title>
   </head>
   <body>
-    <div class="d-flex justify-content-center align-items-center">
-      <div class="card" style="width: 18rem;">
-        <img src="{% static 'app/img/gmail1.webp' %}" class="card-img-top" alt="Mail Image">
-        <div class="card-body">
-          <h5 class="card-title">{{em}}</h5>
+    <div class="container">
+      <div class="col-sm-6">
+        <img src="{% static 'app/img/gmail1.webp' %}" class="col-sm-6" alt="Mail Image">
+        <div class="col-sm-6">
+          {% if error %}
+              <p>{{error}}</p>
+          {% else %}
+              <p>{{em}}</p>
+          {% endif %}    
         </div>
       </div>
     </div>

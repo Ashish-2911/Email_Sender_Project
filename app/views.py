@@ -12,18 +12,21 @@ def sendMail(request):
         
         # Assuming you're using a file input field in your form with name 'attechfile'
         attached_file = request.FILES.get('attechfile')
-                
-        if attached_file:
-            msg = EmailMessage(subject, message, from_email, recipient_list)
-            msg.attach(attached_file.name, attached_file.read(), attached_file.content_type)
-            msg.send()
+        # Check the size of the attached file
+        max_allowed_size = 25 * 1024 * 1024  # 5MB in bytes
 
-            context = {'em': 'Your Email Has Been Sent Successfully!'}
-            return render(request, 'app/email.html', context)
-        else:
-            # Handle case where no file was uploaded
-            context = {'error': 'No file uploaded.'}
-            return render(request, 'app/email.html', context)
+        if attached_file:
+            if attached_file.size <= max_allowed_size:
+                msg = EmailMessage(subject, message, from_email, recipient_list)
+                msg.attach(attached_file.name, attached_file.read(), attached_file.content_type)
+                msg.send()
+
+                context = {'em': 'Your Email Has Been Sent Successfully!'}
+                return render(request, 'app/email.html', context)
+            else:
+                # Handle case where no file was uploaded
+                context = {'error': f'your file size limit is {attached_file.size} bytes more than 25 mb.'}
+                return render(request, 'app/email.html', context)
 
     else:
         return render (request,'app/emailForm.html')
