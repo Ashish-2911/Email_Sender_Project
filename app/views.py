@@ -8,9 +8,8 @@ def sendMail(request):
         subject = request.POST.get('subject')
         message = request.POST.get('message')   
         from_email = request.POST.get('fromemail')
-        recipient_list = request.POST.get('toemail')
-        recipient_list.split(",")
-        recipient_list = list(recipient_list)
+        recipient_list = [request.POST.get('toemail')]
+        
         # Assuming you're using a file input field in your form with name 'attechfile'
         attached_file = request.FILES.get('attechfile')
         
